@@ -46,9 +46,6 @@ module "backup" {
 ```
 
 <!-- BEGIN_TF_DOCS -->
-
-ALLOW TERRAFORM MARKDOWN GITHUB ACTION TO POPULATE THE BELOW
-
 ## Requirements
 
 No requirements.
@@ -57,27 +54,40 @@ No requirements.
 
 | Name | Version |
 |------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
 
 ## Modules
 
-| Name | Source | Version |
-|------|--------|---------|
+No modules.
 
 ## Resources
 
 | Name | Type |
 |------|------|
+| [aws_backup_plan.default-policy-backup-plan](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/backup_plan) | resource |
+| [aws_backup_selection.default-policy-backup-selection](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/backup_selection) | resource |
+| [aws_backup_vault.backup-vault](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/backup_vault) | resource |
+| [aws_iam_role.backup-iam-role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy.backups-pass-role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
+| [aws_iam_role_policy_attachment.backup-backups-iam-attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.backup-restores-iam-attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_policy_document.backups-pass-role-policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_account_number"></a> [account\_number](#input\_account\_number) | The AWS account number resources are being deployed into | `string` | n/a | yes |
+| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | The AWS region to create things in | `string` | n/a | yes |
+| <a name="input_backup_kms_arn"></a> [backup\_kms\_arn](#input\_backup\_kms\_arn) | The kms key ARN for AWS backup | `string` | n/a | yes |
+| <a name="input_delete_after"></a> [delete\_after](#input\_delete\_after) | delete backups after defined number of days | `number` | n/a | yes |
+| <a name="input_is_gov"></a> [is\_gov](#input\_is\_gov) | Whether or not resources will be deployed in a govcloud region | `bool` | n/a | yes |
+| <a name="input_partition"></a> [partition](#input\_partition) | The AWS partition to use | `string` | n/a | yes |
+| <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | The prefix for the s3 bucket names | `string` | n/a | yes |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-
+No outputs.
 <!-- END_TF_DOCS -->
 
 ## Contributing
