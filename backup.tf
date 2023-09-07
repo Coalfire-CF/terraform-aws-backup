@@ -1,17 +1,17 @@
 resource "aws_backup_vault" "backup-vault" {
-  name        = "${var.resource_prefix}-backup-vault"
+  name        = var.backup_vault_name
   kms_key_arn = var.backup_kms_arn
 }
 
 resource "aws_backup_plan" "default-policy-backup-plan" {
 
-  name = "${var.resource_prefix}-default-policy-backup-plan"
+  name = var.backup_plan_name
 
   # Run backup at 3:00 AM GMT every day of the month
   rule {
-    rule_name         = "daily-rule"
+    rule_name         = var.backup_rule_name
     target_vault_name = aws_backup_vault.backup-vault.name
-    schedule          = "cron(0 3 ? * * *)"
+    schedule          = var.backup_schedule
     # Delete after 7 days (maintain daily backups for a week)
     lifecycle {
       delete_after = var.delete_after
@@ -34,6 +34,6 @@ resource "aws_backup_selection" "default-policy-backup-selection" {
   selection_tag {
     type  = "STRINGEQUALS"
     key   = "backup_policy"
-    value = "aws-backup-${var.resource_prefix}-default-policy"
+    value = var.backup_selection_tag_value
   }
 }

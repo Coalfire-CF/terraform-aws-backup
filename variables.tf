@@ -41,3 +41,28 @@ variable "delete_after" {
   description = "delete backups after defined number of days"
   type =  number
 }
+
+variable "backup_rule_name" {
+  description = "AWS backup rule name"
+  type = string
+}
+
+variable "backup_vault_name" {
+  description = "AWS backup vault name"
+  type = string
+}
+
+variable "backup_plan_name" {
+  description = "AWS backup plan name"
+  type = string
+}
+
+variable "backup_schedule" {
+  description = "AWS backup cron schedule"
+  type = string
+  default = "cron(0 3 ? * * *)"
+}
+variable "backup_selection_tag_value" {
+  description = "AWS backup selection tag value"
+  type = string
+}
