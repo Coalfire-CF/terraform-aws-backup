@@ -86,7 +86,6 @@ No modules.
 | <a name="input_backup_selection_tag_value"></a> [backup\_selection\_tag\_value](#input\_backup\_selection\_tag\_value) | AWS backup selection tag value | `string` | n/a | yes |
 | <a name="input_backup_vault_name"></a> [backup\_vault\_name](#input\_backup\_vault\_name) | AWS backup vault name | `string` | n/a | yes |
 | <a name="input_delete_after"></a> [delete\_after](#input\_delete\_after) | delete backups after defined number of days | `number` | n/a | yes |
-| <a name="input_is_gov"></a> [is\_gov](#input\_is\_gov) | Whether or not resources will be deployed in a govcloud region | `bool` | n/a | yes |
 | <a name="input_partition"></a> [partition](#input\_partition) | The AWS partition to use | `string` | n/a | yes |
 | <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | The prefix for the s3 bucket names | `string` | n/a | yes |
 
