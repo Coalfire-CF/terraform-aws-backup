@@ -4,7 +4,7 @@ variable "partition" {
 }
 
 variable "aws_region" {
-  description = "The AWS region to create things in"
+  description = "The AWS region to create resources in"
   type        = string
 }
 
@@ -24,7 +24,7 @@ variable "backup_kms_arn" {
 }
 
 variable "delete_after" {
-  description = "delete backups after defined number of days"
+  description = "Delete backups after defined number of days"
   type =  number
 }
 
