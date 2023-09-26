@@ -3,9 +3,13 @@
 
 </div>
 
-# Coalfire pak README Template
+# AWS Backup Terraform Module
 
-## ACE-AWS-Backups
+## Description
+
+The AWS backup module creates backup resources for your project.
+
+FedRAMP Compliance: High
 
 ## Dependencies
 
@@ -13,35 +17,38 @@
 
 ## Resource List
 
+Resources that are created as a part of this module include:
+
 - AWS backup vault
 - AWS backup plan
 - AWS IAM for backup
 
-## Code Updates
-
-
 ## Deployment Steps
 
-This module can be called as outlined below.
+This module can be called as outlined below:
 
-- Change directories to the `reponame` directory.
-- From the `terraform/azure/reponame` directory run `terraform init`.
+- Change directories to the `terraform-aws-backup` directory.
+- From the `terraform-aws-backup` directory run `terraform init`.
 - Run `terraform plan` to review the resources being created.
 - If everything looks correct in the plan output, run `terraform apply`.
 
 ## Usage
+```
+module "aws-backup" {
+  source = "github.com/Coalfire-CF/terraform-aws-backup"
 
-Include example for how to call the module below with generic variables
-
-```hcl
-module "backup" {
-  source                    = "github.com/Coalfire-CF/ACE-AWS-Backup?ref=vX.X.X"
   partition = var.partition
   aws_region = var.region
   account_number = var.account_id
   resource_prefix = var.resource_prefix
   backup_kms_arn = var.backup_kms_arn
   delete_after = 14
+
+  backup_rule_name = var.backup_rule_name
+  backup_vault_name = var.backup_vault_name
+  backup_plan_name = var.backup_plan_name
+  backup_selection_tag_value = var.backup_selection_tag_value
+
 }
 ```
 
