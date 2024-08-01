@@ -12,7 +12,7 @@ resource "aws_backup_plan" "default-policy-backup-plan" {
     rule_name         = var.backup_rule_name
     target_vault_name = aws_backup_vault.backup-vault.name
     schedule          = var.backup_schedule
-    # Delete after 7 days (maintain daily backups for a week)
+    # Delete after 14 days (maintain daily backups for two weeks)
     lifecycle {
       delete_after = var.delete_after
     }
