@@ -26,6 +26,7 @@ variable "backup_kms_arn" {
 variable "delete_after" {
   description = "Delete backups after defined number of days"
   type =  number
+  default = 14
 }
 
 variable "backup_rule_name" {
