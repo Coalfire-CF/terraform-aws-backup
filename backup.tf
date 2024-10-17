@@ -49,6 +49,7 @@ resource "aws_backup_plan" "min-compliance-backup-plan" {
   name = var.compliance_plan_name
   tags_all = local.tags_all
   tags = local.tags
+  #modified
 
 
     rule {
