@@ -5,5 +5,11 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+  }
 }
+
+provider "aws" {
+  alias  = "mgmt"
+  region = "us-gov-west-1"
+
 }
