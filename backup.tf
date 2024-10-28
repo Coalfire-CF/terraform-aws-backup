@@ -23,9 +23,77 @@ resource "aws_backup_plan" "default-policy-backup-plan" {
     }
     recovery_point_tags = {
       "created-by" : var.default_aws_backup
-      "identifier" : "default-policy-backup-DAILY"
+      "identifier" : var.identify_daily
     }
   }
+
+    rule {
+        completion_window        = 180
+        enable_continuous_backup = false
+        recovery_point_tags      = {
+            "created-by" = var.default_aws_backup
+            "identifier" = "default-policy-backup-MONTHLY"
+        }
+        rule_name                = "monthly-rule"
+        schedule                 = "cron(0 0 1 * ? *)"
+        start_window             = 60
+        target_vault_name        = "cisco-stg-backup-vault"
+
+        lifecycle {
+            cold_storage_after = 30
+            delete_after       = 120
+        }
+    }
+    rule {
+        completion_window        = 180
+        enable_continuous_backup = false
+        recovery_point_tags      = {
+            "created-by" = var.default_aws_backup
+            "identifier" = "default-policy-backup-QUARTERLY"
+        }
+        rule_name                = "quarterly-rule"
+        schedule                 = "cron(0 0 1 */3 ? *)"
+        start_window             = 60
+        target_vault_name        = "cisco-stg-backup-vault"
+
+        lifecycle {
+            cold_storage_after = 90
+            delete_after       = 365
+        }
+    }
+    rule {
+        completion_window        = 180
+        enable_continuous_backup = false
+        recovery_point_tags      = {
+            "created-by" = var.default_aws_backup
+            "identifier" = "default-policy-backup-MONTHLY"
+        }
+        rule_name                = var.rule_name_weekly
+        schedule                 = "cron(0 0 ? * SUN *)"
+        start_window             = 60
+        target_vault_name        = "cisco-stg-backup-vault"
+
+        lifecycle {
+            delete_after = 30
+        }
+    }
+    rule {
+        completion_window        = 180
+        enable_continuous_backup = false
+        recovery_point_tags      = {
+            "created-by" = var.default_aws_backup
+            "identifier" = var.identify_daily
+        }
+        rule_name                = var.rule_name_daily
+        schedule                 = "cron(0 3 ? * * *)"
+        start_window             = 60
+        target_vault_name        = "cisco-stg-backup-vault"
+
+        lifecycle {
+            delete_after = 7
+        }
+    }
+
 }
 
 # Backup selection for the default policy
