@@ -1,6 +1,9 @@
 resource "aws_iam_role" "backup-iam-role" {
 
   name               = "${var.resource_prefix}-backup-role"
+  tags = local.tags
+  tags_all = local.tags_all
+
   assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
