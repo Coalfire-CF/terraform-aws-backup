@@ -30,9 +30,40 @@ This module can be called as outlined below:
 - If everything looks correct in the plan output, run `terraform apply`.
 
 ## Usage
+Single-region backups (because of the way the module is written, you can simply define the same provider for both primary and secondary):
 ```
 module "aws-backup" {
   source = "github.com/Coalfire-CF/terraform-aws-backup"
+
+  providers = {
+    aws.primary = aws.mgmt-gov
+    aws.secondary = aws.mgmt-gov
+  }
+
+  partition = var.partition
+  aws_region = var.region
+  account_number = var.account_id
+  resource_prefix = var.resource_prefix
+  backup_kms_arn = var.backup_kms_arn
+  delete_after = 14
+
+  backup_rule_name = var.backup_rule_name
+  backup_vault_name = var.backup_vault_name
+  backup_plan_name = var.backup_plan_name
+  backup_selection_tag_value = var.backup_selection_tag_value
+}
+```
+
+Cross-region backups (in this example, "aws.mgmt-gov" is configured for "us-gov-west-1" and "aws.mgmt-gov-dr" is configured for "us-gov-east-1"):
+The KMS keys are generally regional.  Even if multi-region keys are used, the ARNs will be different.
+```
+module "aws-backup" {
+  source = "github.com/Coalfire-CF/terraform-aws-backup"
+
+  providers = {
+    aws.primary = aws.mgmt-gov
+    aws.secondary = aws.mgmt-gov-dr
+  }
 
   partition = var.partition
   aws_region = var.region
@@ -46,6 +77,9 @@ module "aws-backup" {
   backup_plan_name = var.backup_plan_name
   backup_selection_tag_value = var.backup_selection_tag_value
 
+  # Cross-Region backup
+  enable_cross_region_backup      = true
+  secondary_region_backup_kms_arn = var.secondary_region_backup_kms_arn
 }
 ```
 
