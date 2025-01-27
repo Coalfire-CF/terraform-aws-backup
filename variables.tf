@@ -8,6 +8,12 @@ variable "aws_region" {
   type        = string
 }
 
+variable "enable_cross_region_backup" {
+  description = "Enable cross-region backup functionality"
+  type        = bool
+  default     = false
+}
+
 variable "account_number" {
   description = "The AWS account number resources are being deployed into"
   type        = string
@@ -21,6 +27,12 @@ variable "resource_prefix" {
 variable "backup_kms_arn" {
   description = "The kms key ARN for AWS backup"
   type        = string
+}
+
+variable "secondary_region_backup_kms_arn" {
+  description = "KMS key ARN in secondary region for backup encryption"
+  type        = string
+  default     = null
 }
 
 variable "delete_after" {
