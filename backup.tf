@@ -1,9 +1,21 @@
 resource "aws_backup_vault" "backup-vault" {
+  provider = aws.primary
+
   name        = var.backup_vault_name
   kms_key_arn = var.backup_kms_arn
 }
 
+resource "aws_backup_vault" "secondary-backup-vault" {
+  provider   = aws.secondary
+
+  count      = var.enable_cross_region_backup ? 1 : 0
+  
+  name       = "${var.backup_vault_name}-secondary"
+  kms_key_arn = var.secondary_region_backup_kms_arn
+}
+
 resource "aws_backup_plan" "default-policy-backup-plan" {
+  provider = aws.primary
 
   name = var.backup_plan_name
 
@@ -12,6 +24,17 @@ resource "aws_backup_plan" "default-policy-backup-plan" {
     rule_name         = var.backup_rule_name
     target_vault_name = aws_backup_vault.backup-vault.name
     schedule          = var.backup_schedule
+
+    dynamic "copy_action" {
+      for_each = var.enable_cross_region_backup ? [1] : []
+      content {
+        destination_vault_arn = aws_backup_vault.secondary-backup-vault[0].arn
+        lifecycle {
+          delete_after = var.delete_after
+        }
+      }
+    }
+
     # Delete after 14 days (maintain daily backups for two weeks)
     lifecycle {
       delete_after = var.delete_after
@@ -25,6 +48,7 @@ resource "aws_backup_plan" "default-policy-backup-plan" {
 
 # Backup selection for the default policy
 resource "aws_backup_selection" "default-policy-backup-selection" {
+  provider = aws.primary
 
   iam_role_arn = aws_iam_role.backup-iam-role.arn
   name         = "${var.resource_prefix}-default-policy-backup-selection"

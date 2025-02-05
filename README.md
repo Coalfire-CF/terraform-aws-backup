@@ -30,9 +30,40 @@ This module can be called as outlined below:
 - If everything looks correct in the plan output, run `terraform apply`.
 
 ## Usage
+Single-region backups (because of the way the module is written, you can simply define the same provider for both primary and secondary):
 ```
 module "aws-backup" {
   source = "github.com/Coalfire-CF/terraform-aws-backup"
+
+  providers = {
+    aws.primary = aws.mgmt-gov
+    aws.secondary = aws.mgmt-gov
+  }
+
+  partition = var.partition
+  aws_region = var.region
+  account_number = var.account_id
+  resource_prefix = var.resource_prefix
+  backup_kms_arn = var.backup_kms_arn
+  delete_after = 14
+
+  backup_rule_name = var.backup_rule_name
+  backup_vault_name = var.backup_vault_name
+  backup_plan_name = var.backup_plan_name
+  backup_selection_tag_value = var.backup_selection_tag_value
+}
+```
+
+Cross-region backups (in this example, "aws.mgmt-gov" is configured for "us-gov-west-1" and "aws.mgmt-gov-dr" is configured for "us-gov-east-1"):
+The KMS keys are generally regional.  Even if multi-region keys are used, the ARNs will be different.
+```
+module "aws-backup" {
+  source = "github.com/Coalfire-CF/terraform-aws-backup"
+
+  providers = {
+    aws.primary = aws.mgmt-gov
+    aws.secondary = aws.mgmt-gov-dr
+  }
 
   partition = var.partition
   aws_region = var.region
@@ -46,6 +77,9 @@ module "aws-backup" {
   backup_plan_name = var.backup_plan_name
   backup_selection_tag_value = var.backup_selection_tag_value
 
+  # Cross-Region backup
+  enable_cross_region_backup      = true
+  secondary_region_backup_kms_arn = var.secondary_region_backup_kms_arn
 }
 ```
 
@@ -61,7 +95,8 @@ module "aws-backup" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
+| <a name="provider_aws.primary"></a> [aws.primary](#provider\_aws.primary) | ~> 5.0 |
+| <a name="provider_aws.secondary"></a> [aws.secondary](#provider\_aws.secondary) | ~> 5.0 |
 
 ## Modules
 
@@ -74,10 +109,13 @@ No modules.
 | [aws_backup_plan.default-policy-backup-plan](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/backup_plan) | resource |
 | [aws_backup_selection.default-policy-backup-selection](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/backup_selection) | resource |
 | [aws_backup_vault.backup-vault](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/backup_vault) | resource |
+| [aws_backup_vault.secondary-backup-vault](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/backup_vault) | resource |
 | [aws_iam_role.backup-iam-role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy.backups-cross-region](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [aws_iam_role_policy.backups-pass-role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [aws_iam_role_policy_attachment.backup-backups-iam-attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.backup-restores-iam-attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_policy_document.backups-cross-region-policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.backups-pass-role-policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
 ## Inputs
@@ -93,8 +131,10 @@ No modules.
 | <a name="input_backup_selection_tag_value"></a> [backup\_selection\_tag\_value](#input\_backup\_selection\_tag\_value) | AWS backup selection tag value | `string` | n/a | yes |
 | <a name="input_backup_vault_name"></a> [backup\_vault\_name](#input\_backup\_vault\_name) | AWS backup vault name | `string` | n/a | yes |
 | <a name="input_delete_after"></a> [delete\_after](#input\_delete\_after) | Delete backups after defined number of days | `number` | `14` | no |
+| <a name="input_enable_cross_region_backup"></a> [enable\_cross\_region\_backup](#input\_enable\_cross\_region\_backup) | Enable cross-region backup functionality | `bool` | `false` | no |
 | <a name="input_partition"></a> [partition](#input\_partition) | The AWS partition to use | `string` | n/a | yes |
 | <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | The prefix for the s3 bucket names | `string` | n/a | yes |
+| <a name="input_secondary_region_backup_kms_arn"></a> [secondary\_region\_backup\_kms\_arn](#input\_secondary\_region\_backup\_kms\_arn) | KMS key ARN in secondary region for backup encryption | `string` | `null` | no |
 
 ## Outputs
 
@@ -102,6 +142,8 @@ No modules.
 |------|-------------|
 | <a name="output_backup_vault_arn"></a> [backup\_vault\_arn](#output\_backup\_vault\_arn) | n/a |
 | <a name="output_backup_vault_id"></a> [backup\_vault\_id](#output\_backup\_vault\_id) | n/a |
+| <a name="output_secondary_backup_vault_arn"></a> [secondary\_backup\_vault\_arn](#output\_secondary\_backup\_vault\_arn) | n/a |
+| <a name="output_secondary_backup_vault_id"></a> [secondary\_backup\_vault\_id](#output\_secondary\_backup\_vault\_id) | If using cross-region backups |
 <!-- END_TF_DOCS -->
 
 ## Contributing
