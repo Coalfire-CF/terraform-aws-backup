@@ -1,39 +1,146 @@
 ![Coalfire](coalfire_logo.png)
 
-# AWS Backup Terraform Module
+# terraform-aws-backup
+
 
 ## Description
 
-The AWS backup module creates backup resources for your project.
+This Terraform module automates the deployment of AWS Backup resources, including backup vaults, backup plans, IAM roles, and policies to enable secure, compliant, and automated backups of AWS resources. It supports both single-region and cross-region backup configurations, resource selection by tags, and integration with KMS for encryption. The module is designed to help organizations meet compliance requirements such as FedRAMP High by providing a standardized, repeatable backup solution.
 
 FedRAMP Compliance: High
 
+## Architecture
+
+This module creates a comprehensive backup solution with the following components:
+- Primary backup vault for storing backups
+- Optional secondary backup vault for cross-region backups
+- Backup plan with customizable scheduling and retention
+- IAM roles and policies for backup operations
+- Resource selection based on tags
+
 ## Dependencies
 
-- KMS key for AWS Backup
+List any dependencies here:
+
+- KMS key for AWS Backup encryption
+- Appropriate AWS provider configuration
+- Tagged resources for backup selection
+
+## Environment Setup
+
+Include the required steps to establish a secure connection to AWS:
+
+```hcl
+- Download and install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+
+- Log into the AWS Console and [create AWS CLI Credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
+
+- Configure the named profile used for the project, such as `aws configure --profile example-mgmt`
+```
+
+## Tree
+```
+.
+|-- CONTRIBUTING.md
+|-- License.md
+|-- README.md
+|-- coalfire_logo.png
+|-- main.tf
+|-- variables.tf
+|-- outputs.tf
+|-- versions.tf
+```
 
 ## Resource List
 
 Resources that are created as a part of this module include:
 
-- AWS backup vault
-- AWS backup plan
-- AWS IAM for backup
+- AWS backup vault (primary region)
+- AWS backup vault (secondary region, if cross-region enabled)
+- AWS backup plan with customizable rules
+- AWS backup selection for tagged resources
+- IAM role for backup operations
+- IAM policies for backup and restore operations
+- Cross-region backup policies (when enabled)
 
-## Deployment Steps
+## Code Updates
 
-This module can be called as outlined below:
+`providers.tf` Update to the appropriate version and providers:
 
-- Change directories to the `terraform-aws-backup` directory.
-- From the `terraform-aws-backup` directory run `terraform init`.
-- Run `terraform plan` to review the resources being created.
-- If everything looks correct in the plan output, run `terraform apply`.
+```hcl
+terraform {
+  required_version = ">=1.5.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+```
+
+## Deployment
+
+This section details how to deploy the AWS Backup resources:
+
+1. Navigate to the Terraform project and create a parent directory in the upper level code, for example:
+
+    ```hcl
+    ../aws/terraform/{REGION}/management-account/backup
+    ```
+
+   If multi-account management plane:
+
+    ```hcl
+    ../aws/terraform/{REGION}/{ACCOUNT_TYPE}-mgmt-account/backup
+    ```
+
+2. Create a properly defined main.tf file via the template found under 'Usage' while adjusting tfvars as needed. Note that many provided variables are outputs from other modules. Example parent directory:
+
+   ```hcl
+   ├── backup/
+   │   ├── backends/
+   │   │   ├── prefix.tfvars
+   │   ├── tfvars/
+   │   │   ├── prefix.tfvars
+   │   ├── data.tf
+   │   ├── locals.tf
+   │   ├── main.tf
+   │   ├── outputs.tf
+   │   ├── providers.tf
+   │   ├── README.md
+   │   ├── remote-data.tf
+   │   ├── required-providers.tf
+   │   ├── tstate.tf
+   │   ├── variables.tf
+   │   ├── ...
+   ```
+
+3. Initialize the Terraform working directory:
+   ```hcl
+   terraform init -backend-config=./backends/prefix.tfvars
+   ```
+   Create an execution plan and verify everything looks correct:
+   ```hcl
+   terraform plan -var-file=./tfvars/prefix.tfvars
+   ```
+   Apply the configuration:
+   ```hcl
+   terraform apply -var-file=./tfvars/prefix.tfvars
+   ```
 
 ## Usage
+
 Single-region backups (because of the way the module is written, you can simply define the same provider for both primary and secondary):
-```
+
+```hcl
+provider "aws" {
+  alias = "mgmt-gov"
+  # Configuration for primary region
+}
+
 module "aws-backup" {
-  source = "github.com/Coalfire-CF/terraform-aws-backup"
+  source = "github.com/Coalfire-CF/terraform-aws-backup?ref=vX.X.X"
 
   providers = {
     aws.primary = aws.mgmt-gov
@@ -55,10 +162,21 @@ module "aws-backup" {
 ```
 
 Cross-region backups (in this example, "aws.mgmt-gov" is configured for "us-gov-west-1" and "aws.mgmt-gov-dr" is configured for "us-gov-east-1"):
-The KMS keys are generally regional.  Even if multi-region keys are used, the ARNs will be different.
-```
+The KMS keys are generally regional. Even if multi-region keys are used, the ARNs will be different.
+
+```hcl
+provider "aws" {
+  alias = "mgmt-gov"
+  # Configuration for primary region
+}
+
+provider "aws" {
+  alias = "mgmt-gov-dr"
+  # Configuration for secondary region
+}
+
 module "aws-backup" {
-  source = "github.com/Coalfire-CF/terraform-aws-backup"
+  source = "github.com/Coalfire-CF/terraform-aws-backup?ref=vX.X.X"
 
   providers = {
     aws.primary = aws.mgmt-gov
@@ -82,6 +200,15 @@ module "aws-backup" {
   secondary_region_backup_kms_arn = var.secondary_region_backup_kms_arn
 }
 ```
+
+## Post Deployment Configuration
+
+After deployment, ensure that:
+
+1. Resources are properly tagged with the backup selection tag value
+2. KMS keys have appropriate permissions for the backup service
+3. Monitor backup job status in the AWS Backup console
+4. Test restore procedures to validate backup integrity
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -148,13 +275,18 @@ No modules.
 
 ## Contributing
 
+[Start Here](CONTRIBUTING.md)
+
 If you're interested in contributing to our projects, please review the [Contributing Guidelines](CONTRIBUTING.md). And send an email to [our team](contributing@coalfire.com) to receive a copy of our CLA and start the onboarding process.
 
 ## License
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit/)
 
+## Contact Us
+
+[Coalfire](https://coalfire.com/)
+
 ### Copyright
 
 Copyright © 2023 Coalfire Systems Inc.
-
