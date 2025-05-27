@@ -284,4 +284,4 @@ If you're interested in contributing to our projects, please review the [Contrib
 
 ### Copyright
 
-Copyright © 2023 Coalfire Systems Inc.
+Copyright © 2025 Coalfire Systems Inc.
