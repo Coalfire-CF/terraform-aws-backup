@@ -11,12 +11,7 @@ FedRAMP Compliance: High
 
 ## Architecture
 
-This module creates a comprehensive backup solution with the following components:
-- Primary backup vault for storing backups
-- Optional secondary backup vault for cross-region backups
-- Backup plan with customizable scheduling and retention
-- IAM roles and policies for backup operations
-- Resource selection based on tags
+[architecture diagram to come]
 
 ## Dependencies
 
