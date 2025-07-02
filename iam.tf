@@ -56,7 +56,7 @@ resource "aws_iam_role_policy_attachment" "backup-backups-iam-attach" {
   depends_on = [aws_iam_role.backup-iam-role]
 }
 
-resource "aws_iam_role_policy_attachment" "backup-backups-iam-attach" {
+resource "aws_iam_role_policy_attachment" "backup-s3-backups-iam-attach" {
   provider = aws.primary
 
   role       = aws_iam_role.backup-iam-role.name
