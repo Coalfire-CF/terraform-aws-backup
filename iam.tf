@@ -56,6 +56,15 @@ resource "aws_iam_role_policy_attachment" "backup-backups-iam-attach" {
   depends_on = [aws_iam_role.backup-iam-role]
 }
 
+resource "aws_iam_role_policy_attachment" "backup-backups-iam-attach" {
+  provider = aws.primary
+
+  role       = aws_iam_role.backup-iam-role.name
+  policy_arn = "arn:${var.partition}:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForS3Backup"
+
+  depends_on = [aws_iam_role.backup-iam-role]
+}
+
 data "aws_iam_policy_document" "backups-cross-region-policy" {
   provider   = aws.secondary
 
