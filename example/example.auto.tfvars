@@ -1,6 +1,6 @@
 resource_prefix = "pak-test"
 aws_region      = "us-gov-west-1"
-profile         = "pak-testing"
+profile         = "govsandbox"
 account_id      = "123456879"
 partition       = "aws-us-gov"
 
