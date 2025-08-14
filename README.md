@@ -152,58 +152,62 @@ SSO-based authentication (via IAM Identity Center SSO):
 
 | Name | Version |
 |------|---------|
-| [terraform](https://www.terraform.io/downloads.html) | >=1.5.0 |
-| [aws](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) | ~> 5.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws.primary | ~> 5.0 |
-| aws.secondary | ~> 5.0 |
+| <a name="provider_aws.primary"></a> [aws.primary](#provider\_aws.primary) | ~> 5.0 |
+| <a name="provider_aws.secondary"></a> [aws.secondary](#provider\_aws.secondary) | ~> 5.0 |
+
+## Modules
+
+No modules.
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| aws_backup_plan.default-policy-backup-plan | resource |
-| aws_backup_selection.default-policy-backup-selection | resource |
-| aws_backup_vault.backup-vault | resource |
-| aws_backup_vault.secondary-backup-vault | resource |
-| aws_iam_role.backup-iam-role | resource |
-| aws_iam_role_policy.backups-cross-region | resource |
-| aws_iam_role_policy.backups-pass-role | resource |
-| aws_iam_role_policy_attachment.backup-backups-iam-attach | resource |
-| aws_iam_role_policy_attachment.backup-restores-iam-attach | resource |
-| aws_iam_policy_document.backups-cross-region-policy | data source |
-| aws_iam_policy_document.backups-pass-role-policy | data source |
+| [aws_backup_plan.default-policy-backup-plan](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/backup_plan) | resource |
+| [aws_backup_selection.default-policy-backup-selection](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/backup_selection) | resource |
+| [aws_backup_vault.backup-vault](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/backup_vault) | resource |
+| [aws_backup_vault.secondary-backup-vault](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/backup_vault) | resource |
+| [aws_iam_role.backup-iam-role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy.backups-cross-region](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
+| [aws_iam_role_policy.backups-pass-role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
+| [aws_iam_role_policy_attachment.backup-backups-iam-attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.backup-restores-iam-attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_policy_document.backups-cross-region-policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.backups-pass-role-policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| account_number | The AWS account number resources are being deployed into | `string` | n/a | yes |
-| aws_region | The AWS region to create resources in | `string` | n/a | yes |
-| backup_kms_arn | The KMS key ARN for AWS Backup | `string` | n/a | yes |
-| backup_plan_name | AWS Backup plan name | `string` | n/a | yes |
-| backup_rule_name | AWS Backup rule name | `string` | n/a | yes |
-| backup_schedule | AWS Backup cron schedule | `string` | "cron(0 3 ? * * *)" | no |
-| backup_selection_tag_value | AWS Backup selection tag value | `string` | n/a | yes |
-| backup_vault_name | AWS Backup vault name | `string` | n/a | yes |
-| delete_after | Delete backups after defined number of days | `number` | 14 | no |
-| enable_cross_region_backup | Enable cross-region backup | `bool` | false | no |
-| partition | The AWS partition to use | `string` | n/a | yes |
-| resource_prefix | Prefix for resource naming | `string` | n/a | yes |
-| secondary_region_backup_kms_arn | KMS key ARN for secondary region | `string` | null | no |
+| <a name="input_account_number"></a> [account\_number](#input\_account\_number) | The AWS account number resources are being deployed into | `string` | n/a | yes |
+| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | The AWS region to create resources in | `string` | n/a | yes |
+| <a name="input_backup_kms_arn"></a> [backup\_kms\_arn](#input\_backup\_kms\_arn) | The kms key ARN for AWS backup | `string` | n/a | yes |
+| <a name="input_backup_plan_name"></a> [backup\_plan\_name](#input\_backup\_plan\_name) | AWS backup plan name | `string` | n/a | yes |
+| <a name="input_backup_rule_name"></a> [backup\_rule\_name](#input\_backup\_rule\_name) | AWS backup rule name | `string` | n/a | yes |
+| <a name="input_backup_schedule"></a> [backup\_schedule](#input\_backup\_schedule) | AWS backup cron schedule | `string` | `"cron(0 3 ? * * *)"` | no |
+| <a name="input_backup_selection_tag_value"></a> [backup\_selection\_tag\_value](#input\_backup\_selection\_tag\_value) | AWS backup selection tag value | `string` | n/a | yes |
+| <a name="input_backup_vault_name"></a> [backup\_vault\_name](#input\_backup\_vault\_name) | AWS backup vault name | `string` | n/a | yes |
+| <a name="input_delete_after"></a> [delete\_after](#input\_delete\_after) | Delete backups after defined number of days | `number` | `14` | no |
+| <a name="input_enable_cross_region_backup"></a> [enable\_cross\_region\_backup](#input\_enable\_cross\_region\_backup) | Enable cross-region backup functionality | `bool` | `false` | no |
+| <a name="input_partition"></a> [partition](#input\_partition) | The AWS partition to use | `string` | n/a | yes |
+| <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | The prefix for the s3 bucket names | `string` | n/a | yes |
+| <a name="input_secondary_region_backup_kms_arn"></a> [secondary\_region\_backup\_kms\_arn](#input\_secondary\_region\_backup\_kms\_arn) | KMS key ARN in secondary region for backup encryption | `string` | `null` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| backup_vault_arn | ARN of the primary backup vault |
-| backup_vault_id | ID of the primary backup vault |
-| secondary_backup_vault_arn | ARN of the secondary backup vault |
-| secondary_backup_vault_id | ID of the secondary backup vault |
+| <a name="output_backup_vault_arn"></a> [backup\_vault\_arn](#output\_backup\_vault\_arn) | n/a |
+| <a name="output_backup_vault_id"></a> [backup\_vault\_id](#output\_backup\_vault\_id) | n/a |
+| <a name="output_secondary_backup_vault_arn"></a> [secondary\_backup\_vault\_arn](#output\_secondary\_backup\_vault\_arn) | n/a |
+| <a name="output_secondary_backup_vault_id"></a> [secondary\_backup\_vault\_id](#output\_secondary\_backup\_vault\_id) | If using cross-region backups |
 <!-- END_TF_DOCS -->
 
 ## Contributing
