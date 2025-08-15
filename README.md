@@ -1,87 +1,151 @@
+
 ![Coalfire](coalfire_logo.png)
 
-# AWS Backup Terraform Module
+# terraform-aws-backup
 
 ## Description
 
-The AWS backup module creates backup resources for your project.
+The AWS Backup module provisions automated backup resources for tagged AWS resources, supporting both single-region and cross-region backup configurations. It creates backup vaults, backup plans, IAM roles, and policies required for secure and compliant backup operations.
 
 FedRAMP Compliance: High
 
 ## Dependencies
 
-- KMS key for AWS Backup
+- KMS key for AWS Backup (see [terraform-aws-kms](https://github.com/Coalfire-CF/terraform-aws-kms))
+- Tagged resources matching backup selection criteria
 
 ## Resource List
 
-Resources that are created as a part of this module include:
 
-- AWS backup vault
-- AWS backup plan
-- AWS IAM for backup
+- AWS Backup Vault (primary and optional secondary for cross-region)
+- AWS Backup Plan
+- AWS Backup Selection
+- IAM Role for Backup operations
+- IAM Policies:
+  - PassRole permissions
+  - Cross-region backup (optional)
+- IAM Policy Attachments:
+  - AWSBackupServiceRolePolicyForBackup
+  - AWSBackupServiceRolePolicyForRestores
 
-## Deployment Steps
+## Cross-Region Backups
 
-This module can be called as outlined below:
+This module supports cross-region backup by enabling the `enable_cross_region_backup` variable and providing a secondary region KMS ARN. Example:
 
-- Change directories to the `terraform-aws-backup` directory.
-- From the `terraform-aws-backup` directory run `terraform init`.
-- Run `terraform plan` to review the resources being created.
-- If everything looks correct in the plan output, run `terraform apply`.
+```hcl
+enable_cross_region_backup         = true
+secondary_region_backup_kms_arn    = var.secondary_region_backup_kms_arn
+```
 
 ## Usage
-Single-region backups (because of the way the module is written, you can simply define the same provider for both primary and secondary):
-```
+
+Single-region backup example:
+```hcl
 module "aws-backup" {
-  source = "github.com/Coalfire-CF/terraform-aws-backup"
+  source = "github.com/Coalfire-CF/terraform-aws-backup?ref=vx.x.x"
 
   providers = {
-    aws.primary = aws.mgmt-gov
+    aws.primary   = aws.mgmt-gov
     aws.secondary = aws.mgmt-gov
   }
 
-  partition = var.partition
-  aws_region = var.region
-  account_number = var.account_id
-  resource_prefix = var.resource_prefix
-  backup_kms_arn = var.backup_kms_arn
-  delete_after = 14
-
-  backup_rule_name = var.backup_rule_name
-  backup_vault_name = var.backup_vault_name
-  backup_plan_name = var.backup_plan_name
-  backup_selection_tag_value = var.backup_selection_tag_value
+  partition                    = var.partition
+  aws_region                   = var.region
+  account_number               = var.account_id
+  resource_prefix              = var.resource_prefix
+  backup_kms_arn               = var.backup_kms_arn
+  delete_after                 = 14
+  backup_rule_name             = var.backup_rule_name
+  backup_vault_name            = var.backup_vault_name
+  backup_plan_name             = var.backup_plan_name
+  backup_selection_tag_value   = var.backup_selection_tag_value
 }
 ```
 
-Cross-region backups (in this example, "aws.mgmt-gov" is configured for "us-gov-west-1" and "aws.mgmt-gov-dr" is configured for "us-gov-east-1"):
-The KMS keys are generally regional.  Even if multi-region keys are used, the ARNs will be different.
-```
+Cross-region backup example:
+```hcl
 module "aws-backup" {
-  source = "github.com/Coalfire-CF/terraform-aws-backup"
+  source = "github.com/Coalfire-CF/terraform-aws-backup?ref=vx.x.x"
 
   providers = {
-    aws.primary = aws.mgmt-gov
+    aws.primary   = aws.mgmt-gov
     aws.secondary = aws.mgmt-gov-dr
   }
 
-  partition = var.partition
-  aws_region = var.region
-  account_number = var.account_id
-  resource_prefix = var.resource_prefix
-  backup_kms_arn = var.backup_kms_arn
-  delete_after = 14
+  partition                          = var.partition
+  aws_region                         = var.region
+  account_number                     = var.account_id
+  resource_prefix                    = var.resource_prefix
+  backup_kms_arn                     = var.backup_kms_arn
+  delete_after                       = 14
+  backup_rule_name                   = var.backup_rule_name
+  backup_vault_name                  = var.backup_vault_name
+  backup_plan_name                   = var.backup_plan_name
+  backup_selection_tag_value         = var.backup_selection_tag_value
 
-  backup_rule_name = var.backup_rule_name
-  backup_vault_name = var.backup_vault_name
-  backup_plan_name = var.backup_plan_name
-  backup_selection_tag_value = var.backup_selection_tag_value
-
-  # Cross-Region backup
-  enable_cross_region_backup      = true
-  secondary_region_backup_kms_arn = var.secondary_region_backup_kms_arn
+  # Cross-region backup
+  enable_cross_region_backup         = true
+  secondary_region_backup_kms_arn    = var.secondary_region_backup_kms_arn
 }
 ```
+
+## Environment Setup
+
+Establish a secure connection to the AWS account used for the build:
+
+IAM user authentication:
+
+- Download and install the AWS CLI (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- Log into the AWS Console and create AWS CLI Credentials (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
+- Configure the named profile used for the project, such as 'aws configure --profile example-mgmt'
+
+SSO-based authentication (via IAM Identity Center SSO):
+
+- Login to the AWS IAM Identity Center console, select the permission set for MGMT, and select the 'Access Keys' link.
+- Choose the 'IAM Identity Center credentials' method to get the SSO Start URL and SSO Region values.
+- Run the setup command 'aws configure sso --profile example-mgmt' and follow the prompts.
+- Verify you can run AWS commands successfully, for example 'aws s3 ls --profile example-mgmt'.
+- Run 'export AWS_PROFILE=example-mgmt' in your terminal to use the specific profile and avoid having to use '--profile' option.
+
+## Deployment
+
+1. Navigate to the Terraform project and create a parent directory in the upper level code, for example:
+
+    ```hcl
+    ../{CLOUD}/terraform/{REGION}/management-account/example
+    ```
+   If multi-account management plane:
+
+    ```hcl
+    ../{CLOUD}/terraform/{REGION}/{ACCOUNT_TYPE}-mgmt-account/example
+    ```
+
+2. Create a properly defined main.tf file via the template found under 'Usage' while adjusting tfvars as needed. Note that many provided variables are outputs from other modules. Example parent directory:
+
+    ```hcl
+     ├── Example/
+     │   ├── example.auto.tfvars   
+     │   ├── main.tf
+     │   ├── outputs.tf
+     │   ├── providers.tf
+     │   ├── required-providers.tf
+     │   ├── remote-data.tf
+     │   ├── variables.tf 
+     │   ├── ...
+     ```
+   
+4. Initialize the Terraform working directory:
+    ```hcl
+    terraform init
+    ```
+    Create an execution plan and verify the resources being created:
+    ```hcl
+    terraform plan
+    ```
+    Apply the configuration:
+    ```hcl
+    terraform apply
+    ```
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -157,5 +221,4 @@ If you're interested in contributing to our projects, please review the [Contrib
 
 ### Copyright
 
-Copyright © 2023 Coalfire Systems Inc.
-
+Copyright © 2025 Coalfire Systems
