@@ -1,0 +1,10 @@
+resource_prefix = "pak-test"
+aws_region      = "us-gov-west-1"
+profile         = "govsandbox"
+account_id      = "123456879"
+partition       = "aws-us-gov"
+
+backup_rule_name           = "pak-daily-backup-rule"
+backup_vault_name          = "pak-backup-vault"
+backup_plan_name           = "pak-backup-plan"
+backup_selection_tag_value = "pak-backup-selection"
