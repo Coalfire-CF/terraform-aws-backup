@@ -60,7 +60,7 @@ resource "aws_iam_role_policy_attachment" "backup-s3-backups-iam-attach" {
   provider = aws.primary
 
   role       = aws_iam_role.backup-iam-role.name
-  policy_arn = "arn:${var.partition}:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForS3Backup"
+  policy_arn = "arn:aws-us-gov:iam::aws:policy/AWSBackupServiceRolePolicyForS3Backup"
 
   depends_on = [aws_iam_role.backup-iam-role]
 }
