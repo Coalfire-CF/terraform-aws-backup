@@ -62,7 +62,8 @@ variable "backup_schedule" {
   default = "cron(0 3 ? * * *)"
 }
 
-#variable "backup_selection_tag_value" {
-#  description = "AWS backup selection tag value"
-#  type = string
-#}
+variable "backup_selection_tag_value" {
+  description = "AWS backup selection tag value"
+  type = string
+  default = "aws-backup-minimum-compliance" # DO NOT CHANGE UNLESS YOU PLAN TO CHANGE TAGGING ON ALL RESOURCES
+}

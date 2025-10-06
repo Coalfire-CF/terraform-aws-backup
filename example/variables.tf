@@ -36,6 +36,12 @@ variable "backup_vault_name" {
   type        = string
 }
 
+variable "backup_selection_tag_value" {
+  description = "Tag value for backup selection"
+  type        = string
+  default     = "aws-backup-minimum-compliance"
+}
+
 variable "partition" {
   description = "AWS partition (aws, aws-cn, aws-us-gov)"
   type        = string

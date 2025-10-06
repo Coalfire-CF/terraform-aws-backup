@@ -58,6 +58,6 @@ resource "aws_backup_selection" "default-policy-backup-selection" {
   selection_tag {
     type  = "STRINGEQUALS"
     key   = "backup_policy"
-    value = "aws-backup-minimum-compliance"
+    value = var.backup_selection_tag_value
   }
 }

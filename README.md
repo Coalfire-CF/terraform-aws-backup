@@ -5,8 +5,7 @@
 
 ## Description
 
-The AWS Backup module provisions automated backup resources for tagged AWS resources, supporting both single-region and cross-region backup configurations. 
-It creates backup vaults, backup plans, IAM roles, and policies required for secure and compliant backup operations.
+The AWS Backup module provisions automated backup resources for tagged AWS resources, supporting both single-region and cross-region backup configurations. It creates backup vaults, backup plans, IAM roles, and policies required for secure and compliant backup operations.
 
 FedRAMP Compliance: High
 
@@ -58,6 +57,9 @@ module "aws-backup" {
   backup_rule_name             = var.backup_rule_name
   backup_vault_name            = var.backup_vault_name
   backup_plan_name             = var.backup_plan_name
+
+  # DO NOT CHANGE UNLESS YOU PLAN TO CHANGE TAGGING ON ALL RESOURCES
+  backup_selection_tag_value   = var.backup_selection_tag_value # "aws-backup-minimum-compliance"
 }
 ```
 
@@ -80,6 +82,9 @@ module "aws-backup" {
   backup_rule_name                   = var.backup_rule_name
   backup_vault_name                  = var.backup_vault_name
   backup_plan_name                   = var.backup_plan_name
+
+  # DO NOT CHANGE UNLESS YOU PLAN TO CHANGE TAGGING ON ALL RESOURCES
+  backup_selection_tag_value         = var.backup_selection_tag_value # "aws-backup-minimum-compliance"
 
   # Cross-region backup
   enable_cross_region_backup         = true

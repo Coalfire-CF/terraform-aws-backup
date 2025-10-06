@@ -3,7 +3,7 @@ module "aws-backup" {
     aws.primary   = aws.govsandbox
     aws.secondary = aws.govsandbox
   }
-  source = "github.com/Coalfire-CF/terraform-aws-backup?ref=vx.x.x"
+  source = "../../../../modules/terraform-aws-backup"
 
   partition       = var.partition
   aws_region      = var.aws_region
@@ -15,4 +15,5 @@ module "aws-backup" {
   backup_rule_name           = var.backup_rule_name
   backup_vault_name          = var.backup_vault_name
   backup_plan_name           = var.backup_plan_name
+  backup_selection_tag_value = var.backup_selection_tag_value # DO NOT CHANGE UNLESS YOU PLAN TO CHANGE TAGGING ON ALL RESOURCES
 }

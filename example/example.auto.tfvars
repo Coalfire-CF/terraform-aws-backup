@@ -7,3 +7,4 @@ partition       = "aws-us-gov"
 backup_rule_name           = "pak-daily-backup-rule"
 backup_vault_name          = "pak-backup-vault"
 backup_plan_name           = "pak-backup-plan"
+backup_selection_tag_value = "aws-backup-minimum-compliance" # DO NOT CHANGE UNLESS YOU PLAN TO CHANGE TAGGING ON ALL RESOURCES
