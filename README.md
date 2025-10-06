@@ -5,17 +5,17 @@
 
 ## Description
 
-The AWS Backup module provisions automated backup resources for tagged AWS resources, supporting both single-region and cross-region backup configurations. It creates backup vaults, backup plans, IAM roles, and policies required for secure and compliant backup operations.
+The AWS Backup module provisions automated backup resources for tagged AWS resources, supporting both single-region and cross-region backup configurations. 
+It creates backup vaults, backup plans, IAM roles, and policies required for secure and compliant backup operations.
 
 FedRAMP Compliance: High
 
 ## Dependencies
 
 - KMS key for AWS Backup (see [terraform-aws-kms](https://github.com/Coalfire-CF/terraform-aws-kms))
-- Tagged resources matching backup selection criteria
+- Tagged resources matching backup selection criteria (Key: "backup_policy", Value: "aws-backup-minimum-compliance")
 
 ## Resource List
-
 
 - AWS Backup Vault (primary and optional secondary for cross-region)
 - AWS Backup Plan
@@ -58,7 +58,6 @@ module "aws-backup" {
   backup_rule_name             = var.backup_rule_name
   backup_vault_name            = var.backup_vault_name
   backup_plan_name             = var.backup_plan_name
-  backup_selection_tag_value   = var.backup_selection_tag_value
 }
 ```
 
@@ -81,7 +80,6 @@ module "aws-backup" {
   backup_rule_name                   = var.backup_rule_name
   backup_vault_name                  = var.backup_vault_name
   backup_plan_name                   = var.backup_plan_name
-  backup_selection_tag_value         = var.backup_selection_tag_value
 
   # Cross-region backup
   enable_cross_region_backup         = true
