@@ -12,10 +12,9 @@ FedRAMP Compliance: High
 ## Dependencies
 
 - KMS key for AWS Backup (see [terraform-aws-kms](https://github.com/Coalfire-CF/terraform-aws-kms))
-- Tagged resources matching backup selection criteria
+- Tagged resources matching backup selection criteria (Key: "backup_policy", Value: "aws-backup-minimum-compliance")
 
 ## Resource List
-
 
 - AWS Backup Vault (primary and optional secondary for cross-region)
 - AWS Backup Plan
@@ -58,7 +57,9 @@ module "aws-backup" {
   backup_rule_name             = var.backup_rule_name
   backup_vault_name            = var.backup_vault_name
   backup_plan_name             = var.backup_plan_name
-  backup_selection_tag_value   = var.backup_selection_tag_value
+
+  # DO NOT CHANGE UNLESS YOU PLAN TO CHANGE TAGGING ON ALL RESOURCES
+  backup_selection_tag_value   = var.backup_selection_tag_value # "aws-backup-minimum-compliance"
 }
 ```
 
@@ -81,7 +82,9 @@ module "aws-backup" {
   backup_rule_name                   = var.backup_rule_name
   backup_vault_name                  = var.backup_vault_name
   backup_plan_name                   = var.backup_plan_name
-  backup_selection_tag_value         = var.backup_selection_tag_value
+
+  # DO NOT CHANGE UNLESS YOU PLAN TO CHANGE TAGGING ON ALL RESOURCES
+  backup_selection_tag_value         = var.backup_selection_tag_value # "aws-backup-minimum-compliance"
 
   # Cross-region backup
   enable_cross_region_backup         = true
@@ -193,7 +196,7 @@ No modules.
 | <a name="input_backup_plan_name"></a> [backup\_plan\_name](#input\_backup\_plan\_name) | AWS backup plan name | `string` | n/a | yes |
 | <a name="input_backup_rule_name"></a> [backup\_rule\_name](#input\_backup\_rule\_name) | AWS backup rule name | `string` | n/a | yes |
 | <a name="input_backup_schedule"></a> [backup\_schedule](#input\_backup\_schedule) | AWS backup cron schedule | `string` | `"cron(0 3 ? * * *)"` | no |
-| <a name="input_backup_selection_tag_value"></a> [backup\_selection\_tag\_value](#input\_backup\_selection\_tag\_value) | AWS backup selection tag value | `string` | n/a | yes |
+| <a name="input_backup_selection_tag_value"></a> [backup\_selection\_tag\_value](#input\_backup\_selection\_tag\_value) | AWS backup selection tag value | `string` | `"aws-backup-minimum-compliance"` | no |
 | <a name="input_backup_vault_name"></a> [backup\_vault\_name](#input\_backup\_vault\_name) | AWS backup vault name | `string` | n/a | yes |
 | <a name="input_delete_after"></a> [delete\_after](#input\_delete\_after) | Delete backups after defined number of days | `number` | `14` | no |
 | <a name="input_enable_cross_region_backup"></a> [enable\_cross\_region\_backup](#input\_enable\_cross\_region\_backup) | Enable cross-region backup functionality | `bool` | `false` | no |

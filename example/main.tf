@@ -15,5 +15,5 @@ module "aws-backup" {
   backup_rule_name           = var.backup_rule_name
   backup_vault_name          = var.backup_vault_name
   backup_plan_name           = var.backup_plan_name
-  backup_selection_tag_value = var.backup_selection_tag_value
+  backup_selection_tag_value = var.backup_selection_tag_value # DO NOT CHANGE UNLESS YOU PLAN TO CHANGE TAGGING ON ALL RESOURCES
 }
