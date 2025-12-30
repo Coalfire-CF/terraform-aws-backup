@@ -131,7 +131,6 @@ SSO-based authentication (via IAM Identity Center SSO):
      │   ├── main.tf
      │   ├── outputs.tf
      │   ├── providers.tf
-     │   ├── required-providers.tf
      │   ├── remote-data.tf
      │   ├── variables.tf 
      │   ├── ...
