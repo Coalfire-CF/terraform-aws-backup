@@ -66,7 +66,7 @@ resource "aws_iam_role_policy_attachment" "backup-s3-backups-iam-attach" {
 }
 
 data "aws_iam_policy_document" "backups-cross-region-policy" {
-  provider   = aws.secondary
+  provider = aws.secondary
 
   count = var.enable_cross_region_backup ? 1 : 0
 
@@ -82,9 +82,9 @@ data "aws_iam_policy_document" "backups-cross-region-policy" {
 }
 
 resource "aws_iam_role_policy" "backups-cross-region" {
-  provider   = aws.secondary
+  provider = aws.secondary
 
-  count  = var.enable_cross_region_backup ? 1 : 0
+  count = var.enable_cross_region_backup ? 1 : 0
 
   policy = data.aws_iam_policy_document.backups-cross-region-policy[0].json
   role   = aws_iam_role.backup-iam-role.id

@@ -37,33 +37,33 @@ variable "secondary_region_backup_kms_arn" {
 
 variable "delete_after" {
   description = "Delete backups after defined number of days"
-  type =  number
-  default = 14
+  type        = number
+  default     = 14
 }
 
 variable "backup_rule_name" {
   description = "AWS backup rule name"
-  type = string
+  type        = string
 }
 
 variable "backup_vault_name" {
   description = "AWS backup vault name"
-  type = string
+  type        = string
 }
 
 variable "backup_plan_name" {
   description = "AWS backup plan name"
-  type = string
+  type        = string
 }
 
 variable "backup_schedule" {
   description = "AWS backup cron schedule"
-  type = string
-  default = "cron(0 3 ? * * *)"
+  type        = string
+  default     = "cron(0 3 ? * * *)"
 }
 
 variable "backup_selection_tag_value" {
   description = "AWS backup selection tag value"
-  type = string
-  default = "aws-backup-minimum-compliance" # DO NOT CHANGE UNLESS YOU PLAN TO CHANGE TAGGING ON ALL RESOURCES
+  type        = string
+  default     = "aws-backup-minimum-compliance" # DO NOT CHANGE UNLESS YOU PLAN TO CHANGE TAGGING ON ALL RESOURCES
 }

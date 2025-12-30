@@ -6,11 +6,11 @@ resource "aws_backup_vault" "backup-vault" {
 }
 
 resource "aws_backup_vault" "secondary-backup-vault" {
-  provider   = aws.secondary
+  provider = aws.secondary
 
-  count      = var.enable_cross_region_backup ? 1 : 0
-  
-  name       = "${var.backup_vault_name}-secondary"
+  count = var.enable_cross_region_backup ? 1 : 0
+
+  name        = "${var.backup_vault_name}-secondary"
   kms_key_arn = var.secondary_region_backup_kms_arn
 }
 
