@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.1](https://github.com/Coalfire-CF/terraform-aws-backup/compare/v1.1.0...v1.1.1) (2026-01-08)
+
+
+### Bug Fixes
+
+* add LICENSE file ([1606834](https://github.com/Coalfire-CF/terraform-aws-backup/commit/1606834dafecaffbacbbcd18c5f736b9c8db9d0a))
+* license year ([620632c](https://github.com/Coalfire-CF/terraform-aws-backup/commit/620632c9bc0c709d6b179e7eb466f54b2b089129))
+* remove License.md ([#31](https://github.com/Coalfire-CF/terraform-aws-backup/issues/31)) ([3d8c57b](https://github.com/Coalfire-CF/terraform-aws-backup/commit/3d8c57ba84f9931493f77c21e048264c41bd76c1))
+* update license year to 2026 ([dfa134d](https://github.com/Coalfire-CF/terraform-aws-backup/commit/dfa134d3aec1a3b6233c104d7751dac34ed0af95))
+
 ## [1.1.0](https://github.com/Coalfire-CF/terraform-aws-backup/compare/v1.0.1...v1.1.0) (2025-10-10)
 
 
