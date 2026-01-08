@@ -131,7 +131,6 @@ SSO-based authentication (via IAM Identity Center SSO):
      │   ├── main.tf
      │   ├── outputs.tf
      │   ├── providers.tf
-     │   ├── required-providers.tf
      │   ├── remote-data.tf
      │   ├── variables.tf 
      │   ├── ...
@@ -155,7 +154,7 @@ SSO-based authentication (via IAM Identity Center SSO):
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.10 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.15 |
 
 ## Providers
