@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.2](https://github.com/Coalfire-CF/terraform-aws-backup/compare/v1.1.1...v1.1.2) (2026-01-20)
+
+
+### Bug Fixes
+
+* use correct CoalForge team slug ([d2c18a1](https://github.com/Coalfire-CF/terraform-aws-backup/commit/d2c18a1a6262304d910b93ddb2efe90500310e8d))
+
+
+### Miscellaneous
+
+* update CODEOWNERS ([941056b](https://github.com/Coalfire-CF/terraform-aws-backup/commit/941056b081547aa66b8334763c0738b912db6d60))
+* update CODEOWNERS ([e9ace11](https://github.com/Coalfire-CF/terraform-aws-backup/commit/e9ace111cc350ee7c1fb323095e87ca985d74818))
+* update org-release.yml to v0.2.1 ([#34](https://github.com/Coalfire-CF/terraform-aws-backup/issues/34)) ([9442a8f](https://github.com/Coalfire-CF/terraform-aws-backup/commit/9442a8f620486c14916385a81e42ccbe4c4032ad))
+
 ## [1.1.1](https://github.com/Coalfire-CF/terraform-aws-backup/compare/v1.1.0...v1.1.1) (2026-01-08)
 
 
