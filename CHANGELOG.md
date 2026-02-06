@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.1.2](https://github.com/Coalfire-CF/terraform-aws-backup/compare/v1.1.1...v1.1.2) (2026-02-06)
+
+
+### Bug Fixes
+
+* use correct CoalForge team slug ([d2c18a1](https://github.com/Coalfire-CF/terraform-aws-backup/commit/d2c18a1a6262304d910b93ddb2efe90500310e8d))
+
+
+### Miscellaneous
+
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml ([10f233b](https://github.com/Coalfire-CF/terraform-aws-backup/commit/10f233b47e9939e987d34d4ea77b5d1a34c53d18))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml ([7f7cf4b](https://github.com/Coalfire-CF/terraform-aws-backup/commit/7f7cf4bf4dc45aa82f1ddc42ad9b1463611f8782))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml from 0.2.1 to 0.2.2 ([f258ae5](https://github.com/Coalfire-CF/terraform-aws-backup/commit/f258ae5bd9e7598dd5e4e9a5d57e947ed8d14517))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml from 0.2.2 to 0.2.4 ([cdfe2e5](https://github.com/Coalfire-CF/terraform-aws-backup/commit/cdfe2e5a4825a626a979f172f59fba195dd3bca6))
+* update CODEOWNERS ([941056b](https://github.com/Coalfire-CF/terraform-aws-backup/commit/941056b081547aa66b8334763c0738b912db6d60))
+* update CODEOWNERS ([e9ace11](https://github.com/Coalfire-CF/terraform-aws-backup/commit/e9ace111cc350ee7c1fb323095e87ca985d74818))
+* update org-release.yml to v0.2.1 ([#34](https://github.com/Coalfire-CF/terraform-aws-backup/issues/34)) ([9442a8f](https://github.com/Coalfire-CF/terraform-aws-backup/commit/9442a8f620486c14916385a81e42ccbe4c4032ad))
+
 ## [1.1.1](https://github.com/Coalfire-CF/terraform-aws-backup/compare/v1.1.0...v1.1.1) (2026-01-08)
 
 
