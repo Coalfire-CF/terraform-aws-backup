@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.1.3](https://github.com/Coalfire-CF/terraform-aws-backup/compare/v1.1.2...v1.1.3) (2026-03-17)
+
+
+### Miscellaneous
+
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml ([f718168](https://github.com/Coalfire-CF/terraform-aws-backup/commit/f718168fc92d11fbef6b63c8ec79b739cb6db52f))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml ([511a44b](https://github.com/Coalfire-CF/terraform-aws-backup/commit/511a44b73c62486d021562b7acc270596c3b4ed6))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml ([a30499f](https://github.com/Coalfire-CF/terraform-aws-backup/commit/a30499fa17935bd6fcbb02c1bbaef35cc6383c7a))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml ([6bdb6a7](https://github.com/Coalfire-CF/terraform-aws-backup/commit/6bdb6a7884bfc7e23b1146468068e292afd48292))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml ([e4432c5](https://github.com/Coalfire-CF/terraform-aws-backup/commit/e4432c533194873f7817743e93669551adb6e5db))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml from 0.2.4 to 0.3.0 ([98b2a9b](https://github.com/Coalfire-CF/terraform-aws-backup/commit/98b2a9b66d83f00d17e39007249c08c5ff9da54e))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml from 0.3.0 to 0.3.1 ([b8f3589](https://github.com/Coalfire-CF/terraform-aws-backup/commit/b8f3589303a70093f2a4f1861dd9fb67787a0a90))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml from 0.3.1 to 0.3.2 ([0d26c7b](https://github.com/Coalfire-CF/terraform-aws-backup/commit/0d26c7b075261abbd42201a92e25d15df54fc375))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml from 0.3.2 to 0.4.0 ([a6a3464](https://github.com/Coalfire-CF/terraform-aws-backup/commit/a6a3464636a92b0b0603855e63476856b8f756d0))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml from 0.4.0 to 0.4.1 ([e489730](https://github.com/Coalfire-CF/terraform-aws-backup/commit/e489730eaa01b4dcaa46360eb9bfa96fe31f37cb))
+* mass update push by coalforge ([7912d9a](https://github.com/Coalfire-CF/terraform-aws-backup/commit/7912d9a7122e4b3561287dbea487042a9ccac2b4))
+* update PR template ([12cd057](https://github.com/Coalfire-CF/terraform-aws-backup/commit/12cd05728840adf071bdf620605117be951ec7b9))
+
 ## [1.1.2](https://github.com/Coalfire-CF/terraform-aws-backup/compare/v1.1.1...v1.1.2) (2026-02-06)
 
 
