@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.4](https://github.com/Coalfire-CF/terraform-aws-backup/compare/v1.1.3...v1.1.4) (2026-04-08)
+
+
+### Miscellaneous
+
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml ([4d371ef](https://github.com/Coalfire-CF/terraform-aws-backup/commit/4d371efc6e75abd38dabc5851418514c3837d9f0))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml from 0.4.1 to 0.5.1 ([cde5828](https://github.com/Coalfire-CF/terraform-aws-backup/commit/cde5828098298a11cfb437a68665888af44594ee))
+
 ## [1.1.3](https://github.com/Coalfire-CF/terraform-aws-backup/compare/v1.1.2...v1.1.3) (2026-03-17)
 
 
